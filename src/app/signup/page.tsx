@@ -1,7 +1,9 @@
 import Link from "next/link";
+import Image from "next/image";
 import { api } from "@/src/services/api"
 import { redirect } from 'next/navigation'
 import styles from '../page.module.scss'
+import logo from '/public/logo.svg'
 
 export default function Signup() {
 
@@ -34,13 +36,7 @@ export default function Signup() {
     return (
         <>
             <div className={styles.containerCenter}>
-                {/* AQUI FICARÁ A IMAGEM DALOGO */}
-                <h1 className={styles.text} style={{ fontSize: '3.5rem' }}>
-                    Sujeito
-                    <span style={{ color: 'var(--red-900)', marginLeft: '-13px' }}>
-                        Pizza
-                    </span>
-                </h1>
+                <Image src={logo} alt='Logomarca do projeto' />
 
                 <section className={styles.login}>
                     <h1>Criando sua conta</h1>

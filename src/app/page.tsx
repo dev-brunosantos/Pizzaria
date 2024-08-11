@@ -1,8 +1,11 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import styles from './page.module.scss'
 import { api } from '../services/api'
 import { redirect } from 'next/navigation'
 import { cookies } from 'next/headers'
+
+import logo from '/public/logo.svg'
 
 export default function Page() {
 
@@ -46,13 +49,7 @@ export default function Page() {
   return (
     <>
       <div className={styles.containerCenter}>
-        {/* AQUI FICARÁ A IMAGEM DALOGO */}
-        <h1 className={styles.text} style={{ fontSize: '3.5rem' }}>
-          Sujeito
-          <span style={{ color: 'var(--red-900)', marginLeft: '-13px' }}>
-            Pizza
-          </span>
-        </h1>
+        <Image src={logo} alt='Logomarca do projeto' />
 
         <section className={styles.login}>
           <form action={handleLogin}>

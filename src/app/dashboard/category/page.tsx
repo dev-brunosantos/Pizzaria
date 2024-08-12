@@ -1,13 +1,40 @@
+import { api } from '@/src/services/api'
 import { Button } from '../components/button'
+import { redirect } from 'next/navigation'
+
 import styles from './styles.module.scss'
+
+import { getCookieServer } from '@/src/lib/cookieServer'
 
 export default function Category() {
 
-    async function handleRegisterCategory() {
+    async function handleRegisterCategory(formData: FormData) {
         "use server"
+
+        const name = formData.get("name")
+
+        if (name === "") return;
+
+        const data = { name: name }
+
+        const token = getCookieServer();
+
+        await api.post("/category", data, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
+            .catch((err) => {
+                console.log("Deu erro"!)
+                console.log(err)
+                return;
+            })
+
+        redirect("/dashboard")
+
     }
 
-    return(
+    return (
         <main className={styles.container}>
             <h1>Nova Categoria</h1>
 
@@ -15,15 +42,15 @@ export default function Category() {
                 className={styles.form}
                 action={handleRegisterCategory}
             >
-                <input 
-                    type="text" 
+                <input
+                    type="text"
                     name='name'
                     placeholder='Nome da Categoria, ex: Pizzas'
                     required
                     className={styles.input}
                 />
 
-                <Button 
+                <Button
                     name='Cadastrar'
                 />
             </form>

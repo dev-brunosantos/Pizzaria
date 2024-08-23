@@ -7,6 +7,7 @@ import { deleteCookie } from 'cookies-next'
 import { useRouter } from 'next/navigation'
 import styles from './styles.module.scss'
 import logo from '/public/logo.svg'
+import { toast } from 'sonner'
 
 export function Header() {
 
@@ -14,6 +15,8 @@ export function Header() {
 
     function handleLogout() {
         deleteCookie("session", { path: "/" })
+
+        toast.success("Logout feito com sucesso.") // ALERTA PERSONALISADO
 
         router.replace("/")
     }

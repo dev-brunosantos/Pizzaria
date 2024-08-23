@@ -3,12 +3,14 @@
 import { ChangeEvent, useState } from 'react';
 import Image from 'next/image';
 import { UploadCloud } from 'lucide-react';
-import { Button } from '@/app/dashboard/components/button'
+import { Button } from '@/app/dashboard/components/button';
+import { toast } from 'sonner';
+import { useRouter } from 'next/navigation'
 
 import { api } from '@/services/api';
 import { GetCookieClient } from '@/lib/cookieClient';
 
-import styles from './styles.module.scss'
+import styles from './styles.module.scss';
 
 interface CategoryProps {
     id: string;
@@ -21,6 +23,8 @@ interface Props {
 
 export function Form({ categories }: Props) {
 
+    const router = useRouter();
+
     const [image, setImage] = useState<File>()
     const [previewImage, setPreviewImage] = useState("")
 
@@ -31,6 +35,7 @@ export function Form({ categories }: Props) {
         const description = formData.get('description')
 
         if(!categoryIndex || !name || !price || !description || !image) {
+            toast.warning("Preencha todos os campos") // ALERTA PERSONALISADO
             return;
         }
 
@@ -48,9 +53,14 @@ export function Form({ categories }: Props) {
             headers: {
                 Authorization: `Bearer ${token}`
             }
+        }).catch((error) => {
+            console.log(error)
+            toast.warning("Falha ao cadastrar produto.")
+            return;
         })
 
-        console.log("CADASTRADO COM SUCESSO")
+        toast.success("Produto cadastrado com sucesso.") // ALERTA PERSONALISADO
+        router.push('/dashboard')
     }
 
     function handleFile(e: ChangeEvent<HTMLInputElement>) {
@@ -58,7 +68,7 @@ export function Form({ categories }: Props) {
             const image = e.target.files[0]
 
             if (image.type !== "image/jpeg" && image.type !== "image/png") {
-                console.log("FORMATO PROIBIDO");
+                toast.warning("Formato de arquivo não permitido!")
                 return;
             }
 

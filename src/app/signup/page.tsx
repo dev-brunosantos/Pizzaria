@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { api } from "@/src/services/api"
+import { api } from "@/services/api"
 import { redirect } from 'next/navigation'
 import styles from '../page.module.scss'
 import logo from '/public/logo.svg'

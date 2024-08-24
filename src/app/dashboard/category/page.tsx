@@ -1,10 +1,10 @@
-import { api } from '@/src/services/api'
+import { api } from '@/services/api'
 import { Button } from '../components/button'
 import { redirect } from 'next/navigation'
 
 import styles from './styles.module.scss'
 
-import { getCookieServer } from '@/src/lib/cookieServer'
+import { getCookieServer } from '@/lib/cookieServer'
 
 export default function Category() {
 

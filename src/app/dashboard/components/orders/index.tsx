@@ -1,6 +1,6 @@
 "use client"
 
-import { use } from 'react'
+import { use, useState } from 'react'
 import { RefreshCw } from 'lucide-react'
 import { ModalOrder } from '../modal'
 import styles from './styles.module.scss'
@@ -8,13 +8,20 @@ import styles from './styles.module.scss'
 import { OrderProps } from '@/lib/order.type'
 import { OrderContext } from '@/providers/order'
 
+import { api } from '@/services/api'
+import { GetCookieClient } from '@/lib/cookieClient'
+
 interface Props {
     orders: OrderProps[]
 }
 
 export function Orders({ orders }: Props) {
 
-    const { isOpen } = use(OrderContext)
+    const { isOpen, onRequestOpen } = use(OrderContext)
+
+    async function handleDetailOrder(order_id: string) {
+        await onRequestOpen(order_id)
+    }
 
     return (
         <>
@@ -28,8 +35,12 @@ export function Orders({ orders }: Props) {
 
                 <section className={styles.listOrders}>
                     {orders.map(order => (
-                        <button key={order.id} className={styles.orderItem}>
-                            <div className={styles.tag}></div>
+                        <button
+                            key={order.id}
+                            className={styles.orderItem}
+                            onClick={() => handleDetailOrder(order.id)}
+                        >
+                            <div className={styles.tag} />
                             <span>Mesa {order.table}</span>
                         </button>
                     ))}

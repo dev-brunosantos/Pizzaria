@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import {
     StyleSheet,
     Text,
@@ -8,17 +8,20 @@ import {
     TouchableOpacity
 } from 'react-native';
 
+import { AuthContext } from '../../contexts/AuthContext'
+
 export default function SignIn() {
+    const { signIn } = useContext(AuthContext)
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
-    function handleLogin() {
-        if(email === '' || password === '') {
+    async function handleLogin() {
+        if (email === '' || password === '') {
             return;
         }
-        
-        console.log(`Email digitado: ${email}`)
+
+        await signIn({ email, password })
     }
 
     return (
@@ -35,7 +38,7 @@ export default function SignIn() {
                     placeholderTextColor="#f0f0f0"
                     value={email}
                     onChangeText={setEmail}
-                    />
+                />
                 <TextInput
                     style={styles.input}
                     placeholder='Sua senha'
